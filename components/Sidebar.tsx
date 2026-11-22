@@ -5,20 +5,60 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Briefcase,
-  Home,
-  GraduationCap,
+  Compass,
   Building2,
   FileCheck2,
+  GraduationCap,
+  Clock,
   User,
 } from 'lucide-react';
 import { useLanguage } from '../src/LanguageContext';
 
-const EXTRA_LABELS: Record<string, { companies: string; visa: string }> = {
-  ko: { companies: '기업 정보', visa: '비자 정보' },
-  en: { companies: 'Company Info', visa: 'Visa Info' },
-  jp: { companies: '企業情報', visa: 'ビザ情報' },
-  cn: { companies: '企业信息', visa: '签证信息' },
-  vn: { companies: 'Thông tin doanh nghiệp', visa: 'Thông tin Visa' },
+const MENU_LABELS: Record<
+  string,
+  {
+    roadmap: string;
+    companies: string;
+    visa: string;
+    specs: string;
+    partTime: string;
+  }
+> = {
+  ko: {
+    roadmap: '취업 로드맵',
+    companies: '기업 정보',
+    visa: '비자 정보',
+    specs: '스펙 쌓기',
+    partTime: '아르바이트 정보',
+  },
+  en: {
+    roadmap: 'Career Roadmap',
+    companies: 'Company Info',
+    visa: 'Visa Info',
+    specs: 'Build Specs',
+    partTime: 'Part-time Jobs',
+  },
+  jp: {
+    roadmap: '就職ロードマップ',
+    companies: '企業情報',
+    visa: 'ビザ情報',
+    specs: 'スペック管理',
+    partTime: 'アルバイト情報',
+  },
+  cn: {
+    roadmap: '就业路线图',
+    companies: '企业信息',
+    visa: '签证信息',
+    specs: '提升资历',
+    partTime: '兼职信息',
+  },
+  vn: {
+    roadmap: 'Lộ trình việc làm',
+    companies: 'Thông tin doanh nghiệp',
+    visa: 'Thông tin Visa',
+    specs: 'Tích lũy hồ sơ',
+    partTime: 'Thông tin làm thêm',
+  },
 };
 
 export default function Sidebar() {
@@ -29,29 +69,34 @@ export default function Sidebar() {
   };
   const { t } = langContext;
   const currentLang = langContext.lang || 'ko';
-  const extra = EXTRA_LABELS[currentLang] || EXTRA_LABELS.ko;
+  const labels = MENU_LABELS[currentLang] || MENU_LABELS.ko;
 
   const navItems = [
     {
-      href: '/',
-      label: t.jobs,
-      icon: Home,
-      badge: 'NEW',
-    },
-    {
-      href: '/spec',
-      label: t.specs,
-      icon: GraduationCap,
+      href: '/roadmap',
+      label: labels.roadmap,
+      icon: Compass,
+      badge: 'GUIDE',
     },
     {
       href: '/companies',
-      label: t.companies || extra.companies,
+      label: labels.companies,
       icon: Building2,
     },
     {
       href: '/visa',
-      label: t.visa || extra.visa,
+      label: labels.visa,
       icon: FileCheck2,
+    },
+    {
+      href: '/spec',
+      label: t.specs || labels.specs,
+      icon: GraduationCap,
+    },
+    {
+      href: '/',
+      label: labels.partTime,
+      icon: Clock,
     },
   ];
 
@@ -60,7 +105,7 @@ export default function Sidebar() {
       <div>
         {/* 상단 로고 영역 */}
         <Link
-          href="/"
+          href="/roadmap"
           className="h-16 px-5 border-b border-gray-100 flex items-center gap-3"
         >
           <div className="w-9 h-9 rounded-lg bg-gray-900 text-white flex items-center justify-center shrink-0">
